@@ -115,6 +115,11 @@ A **FastAPI** application structured as follows:
 
 ---
 
+## Additional Features
+
+The Therapist is able to view previous notes which are sorted by date in descending order.
+Additionally the therapist can filter by patient name.
+
 ## Testing
 
 ### Frontend
