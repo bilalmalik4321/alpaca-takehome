@@ -1,36 +1,38 @@
 import React from "react";
 
 interface FormInputProps {
-  label: string;
-  value: string;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  type?: string;
-  placeholder?: string;
-  required?: boolean;
-}
-
-export function FormInput({
-  label,
-  value,
-  onChange,
-  type = "text",
-  placeholder = "",
-  required = false,
-}: FormInputProps) {
-  return (
-    <div>
-      <label className="block text-left text-gray-700 font-medium mb-2">{label}:</label>
-      <input
-        type={type}
-        value={value}
-        onChange={onChange}
-        placeholder={placeholder}
-        className="w-full border rounded-md px-3 py-2 text-gray-800 focus:outline-none focus:ring focus:ring-blue-300"
-        required={required}
-      />
-    </div>
-  );
-}
+    label: string;
+    value: string;
+    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+    type?: string;
+    id?: string; // Allow specifying a custom id
+  }
+  
+  export const FormInput = ({
+    label,
+    value,
+    onChange,
+    type = "text",
+    id = "form-input", // Default id if none is provided
+  }: FormInputProps) => {
+    return (
+      <div>
+        <label
+          htmlFor={id}
+          className="block text-left text-gray-700 font-medium mb-2"
+        >
+          {label}:
+        </label>
+        <input
+          id={id}
+          type={type}
+          value={value}
+          onChange={onChange}
+          className="w-full border rounded-md px-3 py-2 text-gray-800 focus:outline-none focus:ring focus:ring-blue-300"
+        />
+      </div>
+    );
+  };  
 
 interface FormSelectProps {
   label: string;

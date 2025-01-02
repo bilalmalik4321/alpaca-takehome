@@ -2,8 +2,12 @@
 
 ### Project Description
 
-Visit this link for details:
-[https://harviio.notion.site/Alpaca-Health-Eng-Take-home-Project-1411bfc50b90803382d4cae01f9bcf18?pvs=4](https://www.notion.so/harviio/ABA-Session-Note-Generator-Take-Home-Project-1411bfc50b90803382d4cae01f9bcf18?pvs=4)
+This project implements an AI-assisted ABA (Applied Behavior Analysis) session note generator designed to streamline the creation of professional, consistent notes. The application comprises a **FastAPI backend** and a **Next.js frontend**.
+
+Visit the full project description here:  
+[https://harviio.notion.site/ABA-Session-Note-Generator-Take-Home-Project-1411bfc50b90803382d4cae01f9bcf18?pvs=4](https://www.notion.so/harviio/ABA-Session-Note-Generator-Take-Home-Project-1411bfc50b90803382d4cae01f9bcf18?pvs=4)
+
+---
 
 ## Setup Instructions
 
@@ -18,7 +22,7 @@ source alpaca_venv/bin/activate  # or `venv\Scripts\activate` on Windows
 pip install -r requirements.txt
 
 # Start the server
-fastapi dev main.py
+uvicorn app.main:app --reload
 ```
 
 ### Frontend Setup (Node.js 18+ required)
@@ -36,44 +40,103 @@ npm run dev
 
 The application will be available at:
 
-- Frontend: http://localhost:3000
-- Backend API: http://localhost:8000
-- API Documentation: http://localhost:8000/docs
+- **Frontend**: [http://localhost:3000](http://localhost:3000)  
+- **Backend API**: [http://localhost:8000](http://localhost:8000)  
+- **API Documentation**: [http://localhost:8000/docs](http://localhost:8000/docs)
 
-## Default Project Structure
+---
 
-- `frontend/`: Next.js application
-  - `src/components/`: Reusable React components
-  - `src/app/`: Next.js app router pages
-- `backend/`: FastAPI application
-  - `app/main.py`: API endpoints
+## Project Structure
 
-## Development
+### Frontend (`frontend/`)
 
-- Frontend runs on port 3000 with hot reload enabled
-- Backend runs on port 8000 with auto-reload enabled
-- API documentation available at http://localhost:8000/docs
+A **Next.js** application with the following structure:
 
-## Submission
+- **`src/components/`**: Contains reusable React components, such as form inputs and utility functions.
+- **`src/app/`**: Pages built using the Next.js app router.
+  - `generate/`: Page for generating new session notes.
+  - `view/`: Page for viewing previously saved notes.
+- **Styling**: Tailwind CSS is used for consistent, responsive styling.
 
-1. Create a private GitHub repository
-2. Implement your solution
-3. Document any assumptions or trade-offs
-4. Include instructions for running your solution
-5. Send us the repository link
+### Backend (`backend/`)
 
-## Time Expectation
+A **FastAPI** application structured as follows:
 
-- Expected time: 3-4 hours
-- Please don't spend more than 6 hours
+- **`/main.py`**:  
+  - Contains API endpoints for note generation and storage.
+  - Implements OpenAI API integration for generating professional session notes.
+  - Includes database setup and models using SQLAlchemy.
+- **Database**: SQLite is used for lightweight and local data storage.
+  - **Tables**:
+    - `notes`: Stores patient names, session dates, and the corresponding notes.
 
-## Evaluation Criteria
+---
 
-| Category | Details | Weight |
-|----------|---------|--------|
-| Product sense and scoping | - Final product decisions alignment with requirements<br>- Appropriate deprioritization of non-crucial parts | 10% |
-| Technology selection | - Right tools chosen for the job | 10% |
-| Technical Level | - Well-organized and intuitive code structure<br>- Modular code (e.g., React components used)<br>- Proper use of React hooks<br>- Good state management<br>- Correct use of useEffect hooks | 40% |
-| Craft and Quality | - Usable and intuitive UI/UX<br>- Presence and severity of bugs | 20% |
-| Documentation | - Clear communication of logic and technical decisions in README | 10% |
-| Testing | - Presence of tests<br>- Quality and robustness of tests | 10% |
+## Logic and Design Decisions
+
+### Database: SQLite
+- **Why SQLite?**
+  - Lightweight and file-based, making it ideal for a take-home project.
+  - Easy to set up with minimal configuration.
+  - Meets the requirements for persisting session notes locally.
+
+- **Table Design**:
+  - Each note is uniquely identified by a combination of `name` (patient) and `date`.
+  - The `notes` table ensures data integrity using unique constraints.
+
+### Frontend: Next.js
+- **Why Next.js?**
+  - Supports both client-side and server-side rendering.
+  - Streamlines the integration of React components.
+  - Provides scalability and performance for future enhancements.
+
+- **React Components**:
+  - Modular and reusable components are used to simplify the UI logic.
+  - Input fields and session management are handled with React's `useState`.
+
+### Backend: FastAPI
+- **Why FastAPI?**
+  - High performance and easy-to-use framework for building APIs.
+  - Automatic API documentation via OpenAPI standards.
+  - Seamless integration with modern tools like SQLAlchemy and OpenAI APIs.
+
+- **API Design**:
+  - `/generate-notes`: Generates AI-based session notes.
+  - `/save-notes`: Persists session notes in the database.
+  - `/get-notes`: Retrieves all session notes, with filtering and sorting capabilities.
+
+---
+
+## Testing
+
+### Frontend
+- Uses **Jest** and **React Testing Library** for testing React components.
+- Tests include:
+  - Rendering components (`FormInput`).
+  - Simulating user actions like form submission.
+
+### Backend
+- Includes tests for the FastAPI endpoints using **pytest** and **HTTPX**.
+- Tests ensure:
+  - Notes are generated correctly using mocked OpenAI responses.
+  - Notes are saved and retrieved correctly from the SQLite database.
+
+---
+
+## Development Workflow
+
+- **Frontend**:
+  - Live reloading for faster UI development.
+  - Modular React components for scalability.
+
+- **Backend**:
+  - Auto-reload enabled for iterative development.
+  - API endpoints tested with FastAPI's `/docs` interface.
+
+---
+
+## Future Improvements
+1. **Database Migration**: Integrate Alembic for schema migrations.
+2. **Authentication**: Add user authentication for secure access.
+3. **Cloud Deployment**: Use AWS or Heroku for deploying the backend and frontend.
+4. **Enhanced Filtering**: Improve the UI for filtering notes by date range.

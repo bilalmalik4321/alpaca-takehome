@@ -89,6 +89,10 @@ export default function GenerateNotes() {
         >
           {loading ? "Generating Notes..." : "Submit Notes"}
         </button>
+
+        {loading && (
+          <div className="mt-4 text-blue-500 font-semibold">Generating Notes...</div>
+        )}
       </form>
 
       {/* Generated Notes Section */}
