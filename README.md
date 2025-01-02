@@ -20,8 +20,16 @@ source alpaca_venv/bin/activate  # or `venv\Scripts\activate` on Windows
 
 # Install dependencies
 pip install -r requirements.txt
+```
 
-# Start the server
+Add a `.env` file:
+
+```bash
+OPENAI_API_KEY="<your-api-key>"
+```
+
+Start the server
+```bash
 uvicorn app.main:app --reload
 ```
 
